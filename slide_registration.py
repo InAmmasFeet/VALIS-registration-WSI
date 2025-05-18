@@ -61,10 +61,7 @@ def main():
     registrar = registration.Valis(
         src_dir=os.path.dirname(cd8_slide),  # Directory containing the slides
         dst_dir=output_dir,                  # Destination directory
-        img_list=slide_paths,                # List of slide paths
-        ref_img_f=os.path.basename(cd8_slide),
-        align_to_reference=True,
-        max_image_dim_px=1024                # Default max image dimension in pixels
+        img_list=slide_paths
     )
 
     # Perform registration
