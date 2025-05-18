@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # =============================================================================
 # Enhanced WSI Registration Shell Script using VALIS
