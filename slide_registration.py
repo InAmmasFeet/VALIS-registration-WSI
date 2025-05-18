@@ -55,10 +55,13 @@ def main():
     slide_paths = [cd8_slide, he_slide]
 
     # Initialize VALIS
+    # The CD8 slide is provided first in ``img_list`` so it becomes the
+    # reference image by default.  We avoid using ``ref_img_f`` since some
+    # VALIS versions do not support that argument.
     registrar = registration.Valis(
-        src_dir=output_dir,      # Source directory
+        src_dir=output_dir,      # Temporary processing directory
         dst_dir=output_dir,      # Destination directory
-        img_list=slide_paths,    # List of slide paths
+        img_list=slide_paths,    # [CD8, HE] order ensures CD8 is reference
         max_image_dim_px=1024    # Default max image dimension in pixels
     )
 
