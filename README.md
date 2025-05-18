@@ -6,7 +6,7 @@ This repository contains scripts for performing slide registration on Whole Slid
 
 - `wsi_registration.sh`: Main shell script that handles environment setup and coordinates the registration process
 - `slide_registration.py`: Python script that performs the actual slide registration using VALIS
-- `run_enhanced_valis_registration.sh`: Zsh script that generates and runs a Python program for more advanced VALIS options
+- `run_enhanced_valis_registration.sh`: Bash script that generates and runs a Python program for more advanced VALIS options
 - `environment.yml`: Conda environment specification with all required dependencies
 
 ## Requirements
@@ -48,7 +48,7 @@ macro- and micro-registration, and then saves full‑resolution warped slides.
 ./run_enhanced_valis_registration.sh <cd8_slide_path> <he_slide_path> <output_directory>
 ```
 
-This script requires the `zsh` shell and the `valis_env` conda environment to be available.
+This script requires the `bash` shell and the `valis_env` conda environment to be available.
 
 ## Output
 

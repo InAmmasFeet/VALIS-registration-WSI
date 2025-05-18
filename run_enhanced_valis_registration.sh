@@ -20,7 +20,7 @@
 #
 # Requirements:
 #   - Conda with 'valis_env' environment (containing VALIS 1.1.0 or compatible).
-#   - Zsh shell.
+#   - Bash shell.
 #   - Realpath utility (typically available on Linux/macOS).
 # =============================================================================
 
