@@ -272,15 +272,12 @@ echo "  H&amp;E Slide: $HE_SLIDE_PATH"
 echo "  Output Dir: $OUTPUT_DIR"
 echo "  H&amp;E Downsample Factor for Reg: $DEFAULT_HE_DOWNSAMPLE_FACTOR"
 
-python "$PYTHON_SCRIPT_PATH" \
+if ! python "$PYTHON_SCRIPT_PATH" \
     --cd8_slide "$CD8_SLIDE_PATH" \
     --he_slide "$HE_SLIDE_PATH" \
     --output_dir "$OUTPUT_DIR" \
-    --he_downsample_factor "$DEFAULT_HE_DOWNSAMPLE_FACTOR"
-
-PYTHON_EXIT_CODE=$?
-if [ $PYTHON_EXIT_CODE -ne 0 ]; then
-    error_exit "Python registration script failed with exit code $PYTHON_EXIT_CODE."
+    --he_downsample_factor "$DEFAULT_HE_DOWNSAMPLE_FACTOR"; then
+    error_exit "Python registration script failed with an error."
 fi
 
 echo "-----------------------------------------------------------------------------"

@@ -80,10 +80,7 @@ echo "Output Directory: $OUTPUT_DIR"
 
 # Run the registration script
 echo "Executing VALIS registration..."
-python "$PYTHON_SCRIPT" --cd8_slide "$CD8_SLIDE" --he_slide "$HE_SLIDE" --output_dir "$OUTPUT_DIR"
-
-# Check the exit code of the Python script
-if [ $? -ne 0 ]; then
+if ! python "$PYTHON_SCRIPT" --cd8_slide "$CD8_SLIDE" --he_slide "$HE_SLIDE" --output_dir "$OUTPUT_DIR"; then
     error_exit "Registration process failed with an error."
 fi
 
