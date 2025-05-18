@@ -78,15 +78,15 @@ echo "CD8 Slide: $CD8_SLIDE"
 echo "HE Slide: $HE_SLIDE"
 echo "Output Directory: $OUTPUT_DIR"
 
-# Run the registration script
-echo "Executing VALIS registration..."
-if ! python "$PYTHON_SCRIPT" --cd8_slide "$CD8_SLIDE" --he_slide "$HE_SLIDE" --output_dir "$OUTPUT_DIR"; then
-    error_exit "Registration process failed with an error."
-fi
-
 # Create evaluation directory
 EVAL_DIR="$OUTPUT_DIR/registration_evaluation"
 mkdir -p "$EVAL_DIR"
+
+# Run the registration script
+echo "Executing VALIS registration..."
+if ! python "$PYTHON_SCRIPT" --cd8_slide "$CD8_SLIDE" --he_slide "$HE_SLIDE" --output_dir "$OUTPUT_DIR" --eval_dir "$EVAL_DIR"; then
+    error_exit "Registration process failed with an error."
+fi
 
 # Check for success
 if [ -d "$OUTPUT_DIR/registration_results" ]; then

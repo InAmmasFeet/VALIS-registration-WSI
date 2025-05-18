@@ -21,18 +21,26 @@ import os
 import sys
 import time
 import argparse
+import json
 from valis import registration
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Perform slide registration with VALIS")
+    parser = argparse.ArgumentParser(
+        description="Perform slide registration with VALIS"
+    )
     parser.add_argument("--cd8_slide", required=True, help="Path to CD8 slide")
     parser.add_argument("--he_slide", required=True, help="Path to H&E slide")
     parser.add_argument("--output_dir", required=True, help="Path to output directory")
+    parser.add_argument(
+        "--eval_dir", required=False, help="Directory to store evaluation metrics"
+    )
     args = parser.parse_args()
 
     cd8_slide = args.cd8_slide
     he_slide = args.he_slide
     output_dir = args.output_dir
+    eval_dir = args.eval_dir
 
     # Validate paths
     if not os.path.exists(cd8_slide):
@@ -53,10 +61,10 @@ def main():
 
     # Initialize VALIS
     registrar = registration.Valis(
-        src_dir=output_dir,      # Source directory
-        dst_dir=output_dir,      # Destination directory
-        img_list=slide_paths,    # List of slide paths
-        max_image_dim_px=1024    # Default max image dimension in pixels
+        src_dir=output_dir,  # Source directory
+        dst_dir=output_dir,  # Destination directory
+        img_list=slide_paths,  # List of slide paths
+        max_image_dim_px=1024,  # Default max image dimension in pixels
     )
 
     # Perform registration
@@ -65,17 +73,30 @@ def main():
     # Warp and save the registered slides to the output directory
     print(f"Warping and saving aligned slides to: {output_dir}")
     registrar.warp_and_save_slides(output_dir, crop="overlap")
-    
+
     # Clean up the JVM as recommended
     print("Cleaning up resources...")
     registration.kill_jvm()
-    
+
     elapsed_time = time.time() - start_time
     print(f"Registration completed in {elapsed_time:.2f} seconds")
     print(f"Results saved to: {output_dir}")
-    
+
+    if eval_dir:
+        os.makedirs(eval_dir, exist_ok=True)
+        metrics = {
+            "cd8_slide": os.path.abspath(cd8_slide),
+            "he_slide": os.path.abspath(he_slide),
+            "elapsed_time_sec": elapsed_time,
+        }
+        metrics_path = os.path.join(eval_dir, "metrics.json")
+        with open(metrics_path, "w", encoding="utf-8") as f:
+            json.dump(metrics, f, indent=2)
+        print(f"Evaluation metrics saved to: {metrics_path}")
+
     # Return success status for shell script
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

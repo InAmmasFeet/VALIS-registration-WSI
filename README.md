@@ -55,7 +55,7 @@ This script requires the `zsh` shell and the `valis_env` conda environment to be
 The registration process will create the following in your output directory:
 
 - `registration_results/`: Directory containing the registered slides
-- `registration_evaluation/`: Directory containing evaluation metrics
+- `registration_evaluation/`: Directory containing evaluation metrics (a `metrics.json` file summarizing the run)
 
 ## How It Works
 
