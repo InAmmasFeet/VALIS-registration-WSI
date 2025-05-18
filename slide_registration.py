@@ -55,11 +55,16 @@ def main():
     slide_paths = [cd8_slide, he_slide]
 
     # Initialize VALIS
+    # Initialize VALIS with the CD8 slide explicitly set as the reference image.
+    # Using the slide directory for ``src_dir`` helps VALIS locate the images
+    # when absolute paths are provided.
     registrar = registration.Valis(
-        src_dir=output_dir,      # Source directory
-        dst_dir=output_dir,      # Destination directory
-        img_list=slide_paths,    # List of slide paths
-        max_image_dim_px=1024    # Default max image dimension in pixels
+        src_dir=os.path.dirname(cd8_slide),  # Directory containing the slides
+        dst_dir=output_dir,                  # Destination directory
+        img_list=slide_paths,                # List of slide paths
+        ref_img_f=os.path.basename(cd8_slide),
+        align_to_reference=True,
+        max_image_dim_px=1024                # Default max image dimension in pixels
     )
 
     # Perform registration
