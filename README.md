@@ -6,6 +6,7 @@ This repository contains scripts for performing slide registration on Whole Slid
 
 - `wsi_registration.sh`: Main shell script that handles environment setup and coordinates the registration process
 - `slide_registration.py`: Python script that performs the actual slide registration using VALIS
+- `run_enhanced_valis_registration.sh`: Zsh script that generates and runs a Python program for more advanced VALIS options
 - `environment.yml`: Conda environment specification with all required dependencies
 
 ## Requirements
@@ -37,6 +38,18 @@ conda activate valis_env
 ./wsi_registration.sh "/path/to/CD8.qptiff" "/path/to/HE.qptiff" "/path/to/output"
 ```
 
+### Enhanced Workflow
+
+For more advanced registration features, use `run_enhanced_valis_registration.sh`. This
+script automatically generates a Python program that performs H&E downsampling,
+macro- and micro-registration, and then saves full‑resolution warped slides.
+
+```bash
+./run_enhanced_valis_registration.sh <cd8_slide_path> <he_slide_path> <output_directory>
+```
+
+This script requires the `zsh` shell and the `valis_env` conda environment to be available.
+
 ## Output
 
 The registration process will create the following in your output directory:
@@ -58,6 +71,11 @@ The registration process will create the following in your output directory:
    - Performs the actual registration
    - Warps and saves the aligned slides
    - Cleans up resources
+3. The enhanced shell script (`run_enhanced_valis_registration.sh`):
+   - Generates a dedicated Python script at run time
+   - Downsamples the H&E slide for faster processing
+   - Executes both macro- and micro-registration steps
+   - Warps and saves slides at full resolution
 
 ## Dependencies
 
@@ -75,6 +93,21 @@ The project relies on the following key dependencies, specified in `environment.
 - This workflow is specifically tailored for H&E and CD8 WSI registration
 - Error handling is built in to help diagnose issues
 - The conda environment ensures reproducibility across different systems
+
+## Running on Harvard O2
+
+When using the O2 cluster, load the necessary modules and activate the conda
+environment before executing a script. A typical setup is:
+
+```bash
+module load Anaconda3
+module load openjdk/11.0.2
+module load maven
+conda activate valis_env
+```
+
+Once the environment is active you can run either `wsi_registration.sh` or the
+enhanced `run_enhanced_valis_registration.sh` just as on a local machine.
 
 ## Troubleshooting
 
