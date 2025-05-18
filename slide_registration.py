@@ -4,7 +4,8 @@ Slide Registration Script
 =========================
 
 This script performs slide registration using VALIS 1.1.0.
-It registers and aligns HE and CD8 whole slide images.
+It registers and aligns HE and CD8 whole slide images, saving results
+to a ``registration_results`` directory within the specified output path.
 
 Usage:
     python slide_registration.py --cd8_slide <cd8_path> --he_slide <he_path> --output_dir <output_path>
@@ -37,6 +38,13 @@ def main():
     he_slide = args.he_slide
     output_dir = args.output_dir
 
+    # Prepare subdirectories for results and evaluation
+    results_dir = os.path.join(output_dir, "registration_results")
+    eval_dir = os.path.join(output_dir, "registration_evaluation")
+
+    os.makedirs(results_dir, exist_ok=True)
+    os.makedirs(eval_dir, exist_ok=True)
+
     # Validate paths
     if not os.path.exists(cd8_slide):
         print(f"Error: CD8 slide not found at {cd8_slide}")
@@ -68,8 +76,8 @@ def main():
     registrar.register()
 
     # Warp and save the registered slides to the output directory
-    print(f"Warping and saving aligned slides to: {output_dir}")
-    registrar.warp_and_save_slides(output_dir, crop="overlap")
+    print(f"Warping and saving aligned slides to: {results_dir}")
+    registrar.warp_and_save_slides(results_dir, crop="overlap")
     
     # Clean up the JVM as recommended
     print("Cleaning up resources...")
@@ -77,7 +85,7 @@ def main():
     
     elapsed_time = time.time() - start_time
     print(f"Registration completed in {elapsed_time:.2f} seconds")
-    print(f"Results saved to: {output_dir}")
+    print(f"Results saved to: {results_dir}")
     
     # Return success status for shell script
     return 0
