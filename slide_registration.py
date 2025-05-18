@@ -14,14 +14,17 @@ Requirements:
     - Python 3.7+
 
 Author: Generated script for slide co-registration
-Date: $(date +%Y-%m-%d)
+Date: Generated at runtime using datetime.date.today().isoformat()
 """
 
 import os
 import sys
 import time
 import argparse
+from datetime import date
 from valis import registration
+
+DATE_STR = date.today().isoformat()
 
 def main():
     parser = argparse.ArgumentParser(description="Perform slide registration with VALIS")
