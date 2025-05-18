@@ -69,8 +69,20 @@ mkdir -p "$OUTPUT_DIR" || error_exit "Failed to create output directory: $OUTPUT
 
 # Activate conda environment
 echo "Activating valis_env conda environment..."
-# Try different methods to activate conda - for different shells and configurations
-source ~/miniconda3/etc/profile.d/conda.sh || source ~/anaconda3/etc/profile.d/conda.sh || true
+
+# Ensure the `conda` command is available. If not, try sourcing common initialization scripts
+if ! command -v conda >/dev/null 2>&1; then
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        source "$HOME/miniconda3/etc/profile.d/conda.sh"
+    elif [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        source "$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        error_exit "conda command not found. Please ensure conda is installed and in your PATH."
+    fi
+fi
+
+# Initialize conda for this shell and activate the environment
+eval "$(conda shell.bash hook)" >/dev/null 2>&1
 conda activate valis_env || error_exit "Failed to activate valis_env conda environment. Please ensure it exists."
 
 echo "Starting slide registration process..."

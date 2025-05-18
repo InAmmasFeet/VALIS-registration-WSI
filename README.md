@@ -24,6 +24,11 @@ conda env create -f environment.yml
 conda activate valis_env
 ```
 
+The provided shell scripts automatically attempt to activate `valis_env`. They
+use the `conda` command if it is available in your `PATH` and fall back to
+common installation locations (such as `~/miniconda3` or `~/anaconda3`) if
+necessary.
+
 ## Usage
 
 ### Basic Usage
