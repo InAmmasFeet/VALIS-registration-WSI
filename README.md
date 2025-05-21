@@ -63,6 +63,23 @@ macro- and micro-registration, and then saves full‑resolution warped slides.
 
 This script requires the `bash` shell and the `valis_env` conda environment to be available.
 
+## Validating Registration
+
+After running the registration, you can validate the output using
+`validate_registration.py`. Slides can be specified directly or chosen from a
+Wasabi file tree JSON:
+
+```bash
+python validate_registration.py --he_path /path/to/HE_registered.ome.tiff \
+    --cd8_path /path/to/CD8_registered.ome.tiff \
+    --wasabi_json /path/to/wasabi_file_tree.json \
+    --pair_name "SamplePair"
+```
+
+The `--he_path` and `--cd8_path` options let you pass explicit slide files,
+while `--wasabi_json` combined with `--pair_name` selects a pair from the JSON
+file.
+
 ## Output
 
 The registration process will create the following in your output directory:
