@@ -8,6 +8,7 @@
 #
 # Usage:
 #   ./wsi_registration.sh <cd8_slide_path> <he_slide_path> <output_directory>
+#   ./wsi_registration.sh --pair-index <n> [json_file] <output_directory>
 #
 # Example:
 #   ./wsi_registration.sh "/path/to/CD8.qptiff" "/path/to/HE.qptiff" "/path/to/output"
@@ -33,23 +34,55 @@ error_exit() {
 # Function to display usage information
 usage() {
     echo "Usage: $0 <cd8_slide_path> <he_slide_path> <output_directory>"
+    echo "       $0 --pair-index <n> [json_file] <output_directory>"
     echo
     echo "Arguments:"
     echo "  cd8_slide_path    - Path to the CD8 slide file"
     echo "  he_slide_path     - Path to the HE slide file"
     echo "  output_directory  - Path to the output directory for registration results"
+    echo
+    echo "  --pair-index n    - Index of slide pair to select from JSON file"
+    echo "  json_file         - Optional path to wasabi_file_tree.json (default: wasabi_file_tree.json)"
     exit 1
 }
 
-# Check if correct number of arguments
-if [ $# -ne 3 ]; then
-    usage
-fi
+# Parse arguments
+if [ "$1" = "--pair-index" ]; then
+    if [ $# -lt 3 ]; then
+        usage
+    fi
+    PAIR_INDEX="$2"
+    if [ $# -eq 3 ]; then
+        JSON_FILE="wasabi_file_tree.json"
+        OUTPUT_DIR="$3"
+    else
+        JSON_FILE="$3"
+        OUTPUT_DIR="$4"
+    fi
 
-# Assign arguments to variables
-CD8_SLIDE="$1"
-HE_SLIDE="$2"
-OUTPUT_DIR="$3"
+    SLIDE_INFO=$(python - <<EOF
+from slide_utils import load_wasabi_tree, get_slide_pairs
+import sys
+tree = load_wasabi_tree("$JSON_FILE")
+pairs = get_slide_pairs(tree)
+idx = int("$PAIR_INDEX")
+if idx < 1 or idx > len(pairs):
+    raise SystemExit(f"pair_index {idx} out of range")
+p = pairs[idx-1]
+print(p["cd8_slide"])
+print(p["he_slide"])
+EOF
+)
+    CD8_SLIDE=$(echo "$SLIDE_INFO" | sed -n 1p)
+    HE_SLIDE=$(echo "$SLIDE_INFO" | sed -n 2p)
+else
+    if [ $# -ne 3 ]; then
+        usage
+    fi
+    CD8_SLIDE="$1"
+    HE_SLIDE="$2"
+    OUTPUT_DIR="$3"
+fi
 
 # Get script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
