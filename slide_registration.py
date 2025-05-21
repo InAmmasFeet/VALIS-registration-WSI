@@ -78,15 +78,15 @@ def main():
     # Warp and save the registered slides to the output directory
     print(f"Warping and saving aligned slides to: {results_dir}")
     registrar.warp_and_save_slides(results_dir, crop="overlap")
-    
+
     # Clean up the JVM as recommended
     print("Cleaning up resources...")
     registration.kill_jvm()
-    
+
     elapsed_time = time.time() - start_time
     print(f"Registration completed in {elapsed_time:.2f} seconds")
     print(f"Results saved to: {results_dir}")
-    
+
     # Return success status for shell script
     return 0
 

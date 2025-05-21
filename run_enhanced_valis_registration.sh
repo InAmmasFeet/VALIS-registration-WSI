@@ -4,7 +4,7 @@
 # Enhanced WSI Registration Shell Script using VALIS
 # =============================================================================
 #
-# This script automates an enhanced registration of CD8 (reference) and 
+# This script automates an enhanced registration of CD8 (reference) and
 # H&E (secondary, downsampled) Whole Slide Images using VALIS.
 # It generates and executes a Python script to perform:
 #   1. H&E slide downsampling by a specified factor for registration.
@@ -30,7 +30,7 @@ set -euo pipefail
 # --- Configuration ---
 CONDA_ENV_NAME="valis_env"
 # Default H&E downsample factor for registration processing (2 means 2x coarser)
-DEFAULT_HE_DOWNSAMPLE_FACTOR=2 
+DEFAULT_HE_DOWNSAMPLE_FACTOR=2
 
 
 # --- Helper Functions ---
@@ -143,7 +143,7 @@ def determine_he_level(he_slide_path_py, he_downsample_factor_py):
     """
     if he_downsample_factor_py <= 1:
         return 0 # Full resolution
-    
+
     # Simplistic: 2x -> level 1, 3x or 4x -> level 2. This needs to match slide structure.
     # For a 2x downsample, level 1 is often appropriate.
     if he_downsample_factor_py == 2:
@@ -173,8 +173,8 @@ def perform_registration(cd8_slide_py, he_slide_py, output_dir_py, he_downsample
 
     # Determine the H&E slide loading arguments for downsampling
     he_target_level = determine_he_level(he_slide_py, he_downsample_factor_py)
-    
-    # slide_loading_kwargs: First item for cd8_slide (reference, default loading), 
+
+    # slide_loading_kwargs: First item for cd8_slide (reference, default loading),
     #                       Second item for he_slide (secondary, with specific level)
     slide_kwargs_list = [
         {},  # Default for CD8 slide
@@ -184,7 +184,7 @@ def perform_registration(cd8_slide_py, he_slide_py, output_dir_py, he_downsample
 
     try:
         registration_start_time = time.time()
-        
+
         # Initialize VALIS registrar
         # CD8 slide (first in list) will be the reference by default if ref_img_f is not set
         # or if align_to_reference is False.
@@ -204,18 +204,18 @@ def perform_registration(cd8_slide_py, he_slide_py, output_dir_py, he_downsample
         print("Python: MACRO-registration completed.")
 
         print("Python: Starting MICRO-registration (fine-tuning alignment)...")
-        # VALIS API for micro-registration might vary. 
+        # VALIS API for micro-registration might vary.
         # Simpler versions might just be `registrar.register_micro()`.
         # More explicit versions might take slide objects.
         # Assuming `registrar.register_micro()` uses the current state of the registrar.
-        registrar.register_micro() 
+        registrar.register_micro()
         print("Python: MICRO-registration completed.")
 
         print(f"Python: Warping and saving registered slides to {output_dir_py} at FULL RESOLUTION (level 0)...")
         # crop="overlap" ensures the maximum shared area is warped.
         # level=0 specifies full resolution for the output.
         registrar.warp_and_save_slides(slide_dst_dir=output_dir_py, crop="overlap", level=0)
-        
+
         registration_elapsed_time = time.time() - registration_start_time
         print(f"Python: VALIS registration and warping completed in {registration_elapsed_time:.2f} seconds.")
         print(f"Python: All results, including warped slides, saved in: {output_dir_py}")
@@ -240,7 +240,7 @@ def perform_registration(cd8_slide_py, he_slide_py, output_dir_py, he_downsample
             except Exception as e_jvm_final:
                 print(f"Python: Error during final JVM cleanup: {e_jvm_final}", file=sys.stderr)
                 # Log but don't make the script fail here if main part succeeded
-    
+
     sys.exit(0) # Explicitly exit with success
 
 
@@ -249,14 +249,14 @@ if __name__ == "__main__":
     parser_py.add_argument("--cd8_slide", required=True, help="Path to CD8 slide (reference)")
     parser_py.add_argument("--he_slide", required=True, help="Path to H&E slide (secondary)")
     parser_py.add_argument("--output_dir", required=True, help="Path to output directory for results")
-    parser_py.add_argument("--he_downsample_factor", type=int, required=True, 
+    parser_py.add_argument("--he_downsample_factor", type=int, required=True,
                            help="Factor by which H&E slide's resolution is reduced for registration processing (e.g., 2 for 2x).")
-    
+
     args_py = parser_py.parse_args()
-    
+
     perform_registration(
-        args_py.cd8_slide, 
-        args_py.he_slide, 
+        args_py.cd8_slide,
+        args_py.he_slide,
         args_py.output_dir,
         args_py.he_downsample_factor
     )
