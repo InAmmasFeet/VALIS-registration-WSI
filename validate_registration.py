@@ -11,9 +11,22 @@ from skimage.metrics import structural_similarity as ssim
 from skimage.metrics import mean_squared_error
 from skimage import exposure
 import warnings
+import argparse
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
+
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Validate registration of VALIS output slides"
+    )
+    parser.add_argument(
+        "--base_dir",
+        required=True,
+        help="Directory containing registration results",
+    )
+    return parser.parse_args()
 
 def load_slide(filepath):
     """Load an OME-TIFF slide and return as numpy array"""
@@ -143,8 +156,9 @@ def visualize_tiles(tile1, tile2, he_name, cd8_name, coords, metrics, output_pat
     plt.close()
 
 def main():
+    args = parse_arguments()
     # Define paths
-    registration_dir = "/Users/sashurameshbabu/WSI slides/registration_results/registered_slides"
+    registration_dir = os.path.join(args.base_dir, "registration_results", "registered_slides")
     he_path = os.path.join(registration_dir, "HE_downsampled_x2.ome.tiff")
     cd8_path = os.path.join(registration_dir, "CD8_channel2.ome.tiff")
 
