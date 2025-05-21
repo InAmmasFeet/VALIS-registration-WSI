@@ -7,22 +7,34 @@ from PIL import Image
 import cv2
 import glob
 import random
+import argparse
 
 # Activate the correct environment if needed
 # Use conda environment as per user memory
 import sys
+
 print(f"Using Python: {sys.executable}")
 print(f"Python version: {sys.version}")
 
-# Set base directories - these should be adjusted based on the actual paths
-BASE_DIR = os.path.expanduser("~/WSI slides")
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Visualize results from VALIS registration"
+    )
+    parser.add_argument(
+        "--base_dir",
+        required=True,
+        help="Directory containing registration results",
+    )
+    return parser.parse_args()
+
+# Parse arguments and set base directory
+args = parse_arguments()
+BASE_DIR = args.base_dir
+
 if not os.path.exists(BASE_DIR):
-    # Try without space in name
-    BASE_DIR = os.path.expanduser("~/WSI_slides")
-    if not os.path.exists(BASE_DIR):
-        print("Could not find WSI slides directory. Please adjust the BASE_DIR in the script.")
-        BASE_DIR = os.path.expanduser("~")
-        print(f"Using home directory instead: {BASE_DIR}")
+    print(f"Base directory '{BASE_DIR}' does not exist.")
+    sys.exit(1)
 
 # Define paths (will try multiple potential locations)
 potential_matrix_paths = [
