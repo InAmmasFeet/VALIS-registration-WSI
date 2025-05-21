@@ -24,19 +24,37 @@ import time
 import argparse
 from datetime import date
 from valis import registration
+from slide_utils import load_wasabi_tree, get_slide_pairs
 
 DATE_STR = date.today().isoformat()
 
 def main():
     parser = argparse.ArgumentParser(description="Perform slide registration with VALIS")
-    parser.add_argument("--cd8_slide", required=True, help="Path to CD8 slide")
-    parser.add_argument("--he_slide", required=True, help="Path to H&E slide")
+    parser.add_argument("--cd8_slide", help="Path to CD8 slide")
+    parser.add_argument("--he_slide", help="Path to H&E slide")
+    parser.add_argument("--wasabi_json", help="Path to wasabi_file_tree.json for automatic selection")
+    parser.add_argument("--pair_index", type=int, help="Index of slide pair to use (1-based)")
     parser.add_argument("--output_dir", required=True, help="Path to output directory")
     args = parser.parse_args()
 
-    cd8_slide = args.cd8_slide
-    he_slide = args.he_slide
     output_dir = args.output_dir
+
+    # Determine slide paths either from arguments or the wasabi JSON file
+    if args.wasabi_json and args.pair_index is not None:
+        tree = load_wasabi_tree(args.wasabi_json)
+        pairs = get_slide_pairs(tree)
+        if args.pair_index < 1 or args.pair_index > len(pairs):
+            print(f"Error: pair_index {args.pair_index} out of range. Found {len(pairs)} pairs.")
+            sys.exit(1)
+        selected = pairs[args.pair_index - 1]
+        cd8_slide = selected["cd8_slide"]
+        he_slide = selected["he_slide"]
+        print(f"Selected pair {selected['pair_name']}\n  CD8: {cd8_slide}\n  HE: {he_slide}")
+    elif args.cd8_slide and args.he_slide:
+        cd8_slide = args.cd8_slide
+        he_slide = args.he_slide
+    else:
+        parser.error("Provide --cd8_slide and --he_slide or --wasabi_json with --pair_index")
 
     # Prepare subdirectories for results and evaluation
     results_dir = os.path.join(output_dir, "registration_results")
