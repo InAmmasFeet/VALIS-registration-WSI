@@ -104,10 +104,10 @@ mkdir -p "$EVAL_DIR"
 if [ -d "$OUTPUT_DIR/registration_results" ]; then
     echo "Registration completed successfully!"
     echo "Results are available in: $OUTPUT_DIR"
-    
+
     # Deactivate conda environment
     conda deactivate
-    
+
     exit 0
 else
     error_exit "Registration process did not complete successfully."
