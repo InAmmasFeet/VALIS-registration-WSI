@@ -29,6 +29,14 @@ use the `conda` command if it is available in your `PATH` and fall back to
 common installation locations (such as `~/miniconda3` or `~/anaconda3`) if
 necessary.
 
+### Installing with pip
+
+If you prefer not to use Conda, install the Python dependencies directly with
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Usage
 
 ### Basic Usage
