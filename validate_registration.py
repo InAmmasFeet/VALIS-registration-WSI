@@ -3,6 +3,8 @@
 
 import os
 import sys
+import json
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
@@ -14,6 +16,86 @@ import warnings
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
+
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Validate VALIS registered slides by comparing H&E and CD8 images"
+    )
+    parser.add_argument(
+        "--registration_dir",
+        help="Directory containing registered slides (HE_downsampled_x2.ome.tiff and CD8_channel2.ome.tiff)",
+    )
+    parser.add_argument("--he_path", help="Path to the registered H&E slide")
+    parser.add_argument("--cd8_path", help="Path to the registered CD8 slide")
+    parser.add_argument(
+        "--wasabi_json",
+        default="wasabi_file_tree.json",
+        help="Path to wasabi_file_tree.json for inferring slide locations if paths are not provided",
+    )
+    parser.add_argument(
+        "--pair_name",
+        help="Optional pair name within the JSON used to locate slide paths when registration_dir is not provided",
+    )
+    return parser.parse_args()
+
+def infer_paths_from_json(json_path, pair_name=None):
+    """Infer the registration directory and slide paths from a Wasabi file tree."""
+    try:
+        with open(json_path, "r") as f:
+            tree = json.load(f)
+
+        registration_dir = None
+        def traverse(children, path):
+            nonlocal registration_dir
+            for child in children:
+                if child.get("type") == "directory":
+                    new_path = path + [child["name"]]
+                    if pair_name and child["name"] == pair_name:
+                        registration_dir = os.path.join(*new_path, "registration_results", "registered_slides")
+                        return True
+                    if not pair_name and child["name"].startswith("Pair"):
+                        registration_dir = os.path.join(*new_path, "registration_results", "registered_slides")
+                        return True
+                    if traverse(child.get("children", []), new_path):
+                        return True
+            return False
+
+        traverse(tree.get("children", []), [])
+
+        if registration_dir:
+            base = os.path.dirname(json_path)
+            registration_dir = os.path.join(base, registration_dir)
+            he_path = os.path.join(registration_dir, "HE_downsampled_x2.ome.tiff")
+            cd8_path = os.path.join(registration_dir, "CD8_channel2.ome.tiff")
+            return registration_dir, he_path, cd8_path
+    except Exception as e:
+        print(f"Error parsing {json_path}: {e}")
+
+    return None, None, None
+
+def resolve_paths(args):
+    """Determine registration directory and slide paths based on CLI arguments."""
+    reg_dir = args.registration_dir
+    he_path = args.he_path
+    cd8_path = args.cd8_path
+
+    # If a registration directory is provided, build default slide paths
+    if reg_dir:
+        if not he_path:
+            he_path = os.path.join(reg_dir, "HE_downsampled_x2.ome.tiff")
+        if not cd8_path:
+            cd8_path = os.path.join(reg_dir, "CD8_channel2.ome.tiff")
+        return reg_dir, he_path, cd8_path
+
+    # Attempt to infer from the JSON file
+    reg_dir, he_from_json, cd8_from_json = infer_paths_from_json(
+        args.wasabi_json, args.pair_name
+    )
+    he_path = he_path or he_from_json
+    cd8_path = cd8_path or cd8_from_json
+    return reg_dir, he_path, cd8_path
+
 
 def load_slide(filepath):
     """Load an OME-TIFF slide and return as numpy array"""
@@ -143,11 +225,18 @@ def visualize_tiles(tile1, tile2, he_name, cd8_name, coords, metrics, output_pat
     plt.close()
 
 def main():
-    # Define paths
-    registration_dir = "/Users/sashurameshbabu/WSI slides/registration_results/registered_slides"
-    he_path = os.path.join(registration_dir, "HE_downsampled_x2.ome.tiff")
-    cd8_path = os.path.join(registration_dir, "CD8_channel2.ome.tiff")
-    
+    args = parse_arguments()
+
+    # Resolve paths from CLI or JSON
+    registration_dir, he_path, cd8_path = resolve_paths(args)
+
+    if not he_path or not cd8_path:
+        print("Unable to determine slide paths. Please provide them via command line arguments.")
+        sys.exit(1)
+
+    if not registration_dir:
+        registration_dir = os.path.dirname(he_path)
+
     # Create output directory for visualizations
     output_dir = os.path.join(os.path.dirname(registration_dir), "validation_results")
     os.makedirs(output_dir, exist_ok=True)

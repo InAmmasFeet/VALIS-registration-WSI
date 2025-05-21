@@ -62,6 +62,20 @@ The registration process will create the following in your output directory:
 - `registration_results/`: Directory containing the registered slides
 - `registration_evaluation/`: Directory containing evaluation metrics
 
+## Validating Registration
+
+Use `validate_registration.py` to visually inspect the registered slides. The script
+accepts command line arguments for the registration directory or individual slide
+paths:
+
+```bash
+python validate_registration.py --registration_dir /path/to/registered_slides
+```
+
+If no directory is supplied, the script attempts to locate slides using
+`wasabi_file_tree.json`. You can specify a pair name with `--pair_name` when using
+the JSON lookup.
+
 ## How It Works
 
 1. The shell script (`wsi_registration.sh`):
