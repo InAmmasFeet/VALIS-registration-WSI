@@ -1,0 +1,332 @@
+{
+  "name": "aumamriteshwaryainamaha",
+  "type": "bucket",
+  "children": [
+    {
+      "name": "Registration Slides",
+      "type": "directory",
+      "children": [
+        {
+          "name": "Pair 1 - SU9-7833 H",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CD8 unmixed IF test.qptiff",
+              "type": "file",
+              "size": 11061352508
+            },
+            {
+              "name": "HE test.qptiff",
+              "type": "file",
+              "size": 14421879835
+            }
+          ]
+        },
+        {
+          "name": "Pair 2 - SU15-12596 2O",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU15-12596 2O_HE.qptiff",
+              "type": "file",
+              "size": 20893554989
+            },
+            {
+              "name": "SU15-12596 2O_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9842199112
+            }
+          ]
+        },
+        {
+          "name": "Pair 3 - SU19-10045 4AA",
+          "type": "directory",
+          "children": [
+            {
+              "name": "CD8 unmixed IF.qptiff",
+              "type": "file",
+              "size": 9412130909
+            },
+            {
+              "name": "HEv2.qptiff",
+              "type": "file",
+              "size": 21275741123
+            }
+          ]
+        },
+        {
+          "name": "Pair 4 - SU16-19392 4AC",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU16-19392 4AC_HE.qptiff",
+              "type": "file",
+              "size": 14265443212
+            },
+            {
+              "name": "SU16-19392 4AC_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9813564259
+            }
+          ]
+        },
+        {
+          "name": "Pair 5 - SU18-40197 V",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU18-40197 4V_HE.qptiff",
+              "type": "file",
+              "size": 17696982894
+            },
+            {
+              "name": "SU18-40197 V_unmixed IF.qptiff",
+              "type": "file",
+              "size": 13435698485
+            }
+          ]
+        },
+        {
+          "name": "Pair 6 - SU17-19620 2J",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-19620 2J_HE.qptiff",
+              "type": "file",
+              "size": 12418203204
+            },
+            {
+              "name": "SU17-19620 2J_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9084498551
+            }
+          ]
+        },
+        {
+          "name": "Pair 7 - SU17-24561 4W",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-24561 4W_.unmixed IF.qptiff",
+              "type": "file",
+              "size": 13161509594
+            },
+            {
+              "name": "SU17-24561 4W_HE.qptiff",
+              "type": "file",
+              "size": 17380322035
+            }
+          ]
+        },
+        {
+          "name": "Pair 8 - SU17-34877 1N",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-34877 1N_ HE.qptiff",
+              "type": "file",
+              "size": 10053188867
+            },
+            {
+              "name": "SU17-34877 1N_.unmixed IF.qptiff",
+              "type": "file",
+              "size": 8301994653
+            }
+          ]
+        },
+        {
+          "name": "Pair 9 - SU16-477467 4N",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU16-47767 4N_HE.qptiff",
+              "type": "file",
+              "size": 12002478870
+            },
+            {
+              "name": "SU16-47767 4N_unmixed IF.qptiff",
+              "type": "file",
+              "size": 7971971486
+            }
+          ]
+        },
+        {
+          "name": "Pair 10 - SU18-45396 4M",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU18-45396 4M_HE.qptiff",
+              "type": "file",
+              "size": 16182322226
+            },
+            {
+              "name": "SU18-45396 4M_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9539054476
+            }
+          ]
+        },
+        {
+          "name": "Pair 11 - SU17-57993 4P",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-57993 4P_Scan1 HE.qptiff",
+              "type": "file",
+              "size": 11124952351
+            },
+            {
+              "name": "test wsi unmixed IF.qptiff",
+              "type": "file",
+              "size": 9162536757
+            }
+          ]
+        },
+        {
+          "name": "Pair 12 - SU17-9904 2V",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-9904 2V_.unmixed.qptiff",
+              "type": "file",
+              "size": 10177193958
+            },
+            {
+              "name": "SU17-9904 2V_HE.qptiff",
+              "type": "file",
+              "size": 16430149166
+            }
+          ]
+        },
+        {
+          "name": "Pair 13 - SU19-9759 3L",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU19-9759 3L_HE.qptiff",
+              "type": "file",
+              "size": 16701721969
+            },
+            {
+              "name": "SU19-9759 3L_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9336214265
+            }
+          ]
+        },
+        {
+          "name": "Pair 14 - SU19-11213 1C ",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU19-11213 1C_HE.qptiff",
+              "type": "file",
+              "size": 10330483619
+            },
+            {
+              "name": "SU19-11213 1C_unmixed IF.qptiff",
+              "type": "file",
+              "size": 5200147399
+            }
+          ]
+        },
+        {
+          "name": "Pair 15 - SU18-16454 2S",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU18-16454 2S_HE.qptiff",
+              "type": "file",
+              "size": 35615006546
+            },
+            {
+              "name": "SU18-16454 2S_unmixed IF.qptiff",
+              "type": "file",
+              "size": 8938199339
+            }
+          ]
+        },
+        {
+          "name": "Pair 16 - SU17-42414 5G",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-42414 5G_HE.qptiff",
+              "type": "file",
+              "size": 19942023815
+            },
+            {
+              "name": "SU17-42414 5G_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9870936105
+            }
+          ]
+        },
+        {
+          "name": "Pair 17 - SU17-46621 2L",
+          "type": "directory",
+          "children": [
+            {
+              "name": "AU17-46621 2L_HE.qptiff",
+              "type": "file",
+              "size": 19656976596
+            },
+            {
+              "name": "SU17-46621 2L unmixed IF.qptiff",
+              "type": "file",
+              "size": 11872935021
+            }
+          ]
+        },
+        {
+          "name": "Pair 18 - SU17-51505 2I",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU17-511505 2I_HE.qptiff",
+              "type": "file",
+              "size": 10076341821
+            },
+            {
+              "name": "SU17-51505 2I_unmixed IF.qptiff",
+              "type": "file",
+              "size": 5096336283
+            }
+          ]
+        },
+        {
+          "name": "Pair 19 - SU18-51516 4N-2N",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SU18-51516 2N_unmixed IF.qptiff",
+              "type": "file",
+              "size": 15505625114
+            },
+            {
+              "name": "SU18-51516 4N_HE.qptiff",
+              "type": "file",
+              "size": 22659783129
+            }
+          ]
+        },
+        {
+          "name": "Pair 20 - S04-4535 G ",
+          "type": "directory",
+          "children": [
+            {
+              "name": "S04-04535 G_unmixed IF.qptiff",
+              "type": "file",
+              "size": 9738976755
+            },
+            {
+              "name": "S04-4535 5_HE.qptiff",
+              "type": "file",
+              "size": 12546246714
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
