@@ -5,18 +5,18 @@ channels:
 dependencies:
   - python=3.10           # VALIS supports Python 3.9 or 3.10
   - openjdk>=11           # for Bio-Formats (Java runtime)
-  - maven                 # for Bio-Formats (needed to build Bioformats jar index)
-  - openslide             # OpenSlide library for certain slide formats
-  - openslide-python      # Python bindings for OpenSlide
-  - pyvips                # Python bindings for libvips (includes libvips)
-  - scikit-image          # image processing (VALIS uses it for features)
-  - numpy                 # numerical library
-  - pandas                # for data processing and CSV handling
-  - matplotlib            # for visualization
-  - pillow                # for image processing
-  - opencv                # for feature detection and image processing
-  - pip                   # include pip to install valis-wsi
+  - maven==3.9.9          # for Bio-Formats (needed to build Bioformats jar index)
+  - openslide==3.4.1      # OpenSlide library for certain slide formats
+  - openslide-python==1.3.1  # Python bindings for OpenSlide
+  - pyvips==2.2.1         # Python bindings for libvips (includes libvips)
+  - scikit-image==0.19.3  # image processing (VALIS uses it for features)
+  - numpy==1.24.4         # numerical library
+  - pandas==1.5.3         # for data processing and CSV handling
+  - matplotlib==3.10.1    # for visualization
+  - pillow==9.5.0         # for image processing
+  - opencv==4.7.0           # for feature detection and image processing
+  - pip==25.1.1                   # include pip to install valis-wsi
   - pip:
     - valis-wsi==1.1.0    # VALIS package (version 1.1.0)
-    - tifffile            # for handling OME-TIFF files
-    - scyjava             # required for Bio-Formats Java interop
+    - tifffile==2025.5.10 # for handling OME-TIFF files
+    - scyjava==1.12.0     # required for Bio-Formats Java interop
