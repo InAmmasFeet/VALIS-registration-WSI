@@ -84,35 +84,35 @@ PYTHON_SCRIPT_NAME="valis_registration_generated.py"
 PYTHON_SCRIPT_PATH="${OUTPUT_DIR}/${PYTHON_SCRIPT_NAME}"
 
 # --- Conda Environment Activation ---
-echo "Attempting to activate conda environment: $CONDA_ENV_NAME"
-conda_activated=false
+# echo "Attempting to activate conda environment: $CONDA_ENV_NAME"
+# conda_activated=false
 # Try common conda locations
-CONDA_BASE_PATHS=(
-    "$HOME/miniconda3" "$HOME/opt/miniconda3"
-    "$HOME/anaconda3" "$HOME/opt/anaconda3"
-    "/opt/homebrew/Caskroom/miniconda/base" # For M1/M2 Homebrew
-)
-for base_path in "${CONDA_BASE_PATHS[@]}"; do
-    if [ -f "$base_path/etc/profile.d/conda.sh" ]; then
-        echo "Sourcing conda from $base_path/etc/profile.d/conda.sh"
-        source "$base_path/etc/profile.d/conda.sh"
-        if conda activate "$CONDA_ENV_NAME"; then
-            echo "Successfully activated conda environment: $CONDA_ENV_NAME"
-            conda_activated=true
-            break
-        fi
-    fi
-done
+# CONDA_BASE_PATHS=(
+#    "$HOME/miniconda3" "$HOME/opt/miniconda3"
+#    "$HOME/anaconda3" "$HOME/opt/anaconda3"
+#    "/opt/homebrew/Caskroom/miniconda/base" # For M1/M2 Homebrew
+#)
+#for base_path in "${CONDA_BASE_PATHS[@]}"; do
+#    if [ -f "$base_path/etc/profile.d/conda.sh" ]; then
+#        echo "Sourcing conda from $base_path/etc/profile.d/conda.sh"
+#        source "$base_path/etc/profile.d/conda.sh"
+#        if conda activate "$CONDA_ENV_NAME"; then
+#            echo "Successfully activated conda environment: $CONDA_ENV_NAME"
+#            conda_activated=true
+#            break
+#        fi
+#    fi
+#done
 
-if ! $conda_activated; then
-    echo "Could not source conda.sh from common paths. Attempting direct activation (requires conda to be pre-initialized in shell)."
-    if conda activate "$CONDA_ENV_NAME"; then
-        echo "Successfully activated conda environment: $CONDA_ENV_NAME (direct)"
-        conda_activated=true
-    else
-        error_exit "Failed to activate conda environment '$CONDA_ENV_NAME'. Ensure conda is initialized and the environment exists."
-    fi
-fi
+#if ! $conda_activated; then
+#    echo "Could not source conda.sh from common paths. Attempting direct activation (requires conda to be pre-initialized in shell)."
+#    if conda activate "$CONDA_ENV_NAME"; then
+#        echo "Successfully activated conda environment: $CONDA_ENV_NAME (direct)"
+#        conda_activated=true
+#    else
+#        error_exit "Failed to activate conda environment '$CONDA_ENV_NAME'. Ensure conda is initialized and the environment exists."
+#    fi
+#fi
 
 # --- Python Script Generation ---
 echo "Generating Python registration script at: $PYTHON_SCRIPT_PATH"
