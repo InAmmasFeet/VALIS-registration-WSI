@@ -1,0 +1,6 @@
+name: valis_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10           # VALIS supports Python 3.9 or 3.10
